@@ -60,6 +60,7 @@
                        FontWeight="Bold"
                        Margin="0,15,0,5"/>
             <Slider x:Name="sliderRed"
+                    Value="52"
                     Minimum="0"
                     Maximum="255"
                     TickFrequency="1"
@@ -71,7 +72,7 @@
            FontWeight="Bold"
            Margin="0,15,0,5"/>
             <Slider x:Name="sliderGreen"
-                   
+                Value="152"
                 Minimum="0"
                 Maximum="255"
                 TickFrequency="1"
@@ -83,6 +84,7 @@
                 FontWeight="Bold"
                 Margin="0,15,0,5"/>
             <Slider x:Name="sliderBlue"
+                Value="219"
                 Minimum="0"
                 Maximum="255"
                 TickFrequency="1"

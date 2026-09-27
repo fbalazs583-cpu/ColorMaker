@@ -20,6 +20,7 @@ namespace ColorMaker
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += (s, e) => UpdateColorFromSlider();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -31,6 +32,11 @@ namespace ColorMaker
                 byte r = color.R;
                 byte g = color.G;
                 byte b = color.B;
+
+                sliderRed.Value = r;
+                sliderGreen.Value = g;
+                sliderBlue.Value = b;
+
                 txtRgb.Text = $"RGB: {r}, {g}, {b}";
                 BrushConverter brushConverter = new BrushConverter();
                 Brush brush = (Brush)brushConverter.ConvertFromString(hexCode);
@@ -49,6 +55,11 @@ namespace ColorMaker
             byte g = (byte)random.Next(256);
             byte b = (byte)random.Next(256);
 
+            sliderRed.Value = r;
+            sliderGreen.Value = g;
+            sliderBlue.Value = b;
+
+
             Color color = Color.FromRgb(r, g, b);
             SolidColorBrush brush = new SolidColorBrush(color);
             colorPreview.Background = brush;
@@ -63,18 +74,36 @@ namespace ColorMaker
 
         private void sliderRed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int redValue = (int)sliderRed.Value;
+            UpdateColorFromSlider();
 
         }
 
         private void sliderGreen_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int greenValue = (int)sliderGreen.Value;
+            UpdateColorFromSlider();
         }
 
         private void sliderBlue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int blueValue = (int)sliderBlue.Value;
+            UpdateColorFromSlider();
+        }
+
+        private void UpdateColorFromSlider() 
+        {
+            if (sliderRed == null || sliderGreen == null || sliderBlue == null || colorPreview == null || textColor == null || txtRgb == null) 
+            {
+                return;
+            }
+            byte r = (byte)sliderRed.Value;
+            byte g = (byte)sliderGreen.Value;
+            byte b  = (byte)sliderBlue.Value;
+
+            Color color = Color.FromRgb(r, g, b);
+            SolidColorBrush brush = new SolidColorBrush(color);
+
+            colorPreview.Background = brush;
+            textColor.Text = $"#{r:X2}{g:X2}{b:X2}";
+            txtRgb.Text = $"RGB: {r}, {g}, {b}";
         }
     }
 }
