@@ -1,0 +1,80 @@
+﻿using System.Linq.Expressions;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace ColorMaker
+{
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string hexCode = textColor.Text;
+                Color color = (Color)ColorConverter.ConvertFromString(hexCode);
+                byte r = color.R;
+                byte g = color.G;
+                byte b = color.B;
+                txtRgb.Text = $"RGB: {r}, {g}, {b}";
+                BrushConverter brushConverter = new BrushConverter();
+                Brush brush = (Brush)brushConverter.ConvertFromString(hexCode);
+                colorPreview.Background = brush;
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Rossz input!", "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Random random = new Random();
+            byte r = (byte)random.Next(256);
+            byte g = (byte)random.Next(256);
+            byte b = (byte)random.Next(256);
+
+            Color color = Color.FromRgb(r, g, b);
+            SolidColorBrush brush = new SolidColorBrush(color);
+            colorPreview.Background = brush;
+            textColor.Text = $"#{r:X2}{g:X2}{b:X2}";
+            txtRgb.Text = $"RGB: {r}, {g}, {b}";
+        }
+
+        private void textColor_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void sliderRed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int redValue = (int)sliderRed.Value;
+
+        }
+
+        private void sliderGreen_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int greenValue = (int)sliderGreen.Value;
+        }
+
+        private void sliderBlue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int blueValue = (int)sliderBlue.Value;
+        }
+    }
+}
